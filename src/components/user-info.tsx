@@ -1,11 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
 import { type User } from '@/types';
-import { PACOCA_BACKEND_URL } from '@/utils/vars';
+import { PACOCA_API_URL } from '@/utils/vars';
 
 export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: boolean }) {
     const getInitials = useInitials();
-    const userImg = user?.img_account ? PACOCA_BACKEND_URL + "/" + user?.img_account.replace(/\.\.\//g, '') : null;
+    const userImg = user?.img_account ? PACOCA_API_URL + "/" + user?.img_account.replace(/\.\.\//g, '') : null;
 
     return (
         <>

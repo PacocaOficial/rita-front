@@ -4,6 +4,8 @@ import NotFound from "@/pages/errors/not-found/not-found";
 import RoutesUnauthenticated from "./routes-unauthenticated";
 import Login from "@/pages/login";
 import Main from "@/pages/layout";
+import RoutesAuthenticated from "./routes-authenticated";
+import AppointmentsIndex from "@/pages/appointments";
 
 const AppRoutes: React.FC = () => {
 	return (
@@ -11,6 +13,13 @@ const AppRoutes: React.FC = () => {
                         <Route path="/" element={<Main />}>
                                 <Route path="/" element={<Welcome/>} />
                                 <Route path="*" element={<NotFound />} />
+
+                                {/* rotas autenticadas */}
+                                <Route path="agendamentos" element={<RoutesAuthenticated><AppointmentsIndex /></RoutesAuthenticated>} />
+                                {/* <Route path="agendamentos/:id" element={<RoutesAuthenticated><AppointmentDetails /></RoutesAuthenticated>} /> */}
+                                {/* <Route path="perfil" element={<RoutesAuthenticated><Profile /></RoutesAuthenticated>} /> */}
+                                {/* <Route path="perfil/editar" element={<RoutesAuthenticated><EditProfile /></RoutesAuthenticated>} /> */}
+                                {/* <Route path="perfil/conta" element={<RoutesAuthenticated><AccountSettings /></RoutesAuthenticated>} /> */}
 
                                 {/* não pode estar logado */}
                                 <Route path="login" element={<RoutesUnauthenticated> <Login /></RoutesUnauthenticated>} />

@@ -1,4 +1,5 @@
-import { BACKEND_URL } from "./vars";
+import { User } from "@/types";
+import { PACOCA_API_URL } from "./vars";
 
 export const isAuthenticated = () => {
     return localStorage.getItem("token") !== null;
@@ -8,6 +9,10 @@ export const isAuthenticated = () => {
 //     localStorage.removeItem("token");
 //     localStorage.removeItem("user");
 // };
+
+export const isAdmin = (user: User | null): boolean => {
+    return !!(user && user.id <=5)
+}
 
 export const authId = () => {
     const userJson = localStorage.getItem("user");
@@ -38,5 +43,5 @@ export const authUser = () => {
 };
 
 export const getImageUser = (path?: string) =>{
-    return path ? `${BACKEND_URL}/${path}` : "/img/img-account.png";
+    return path ? `${PACOCA_API_URL}/${path}` : "/img/img-account.png";
 }

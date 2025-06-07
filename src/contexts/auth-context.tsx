@@ -7,10 +7,10 @@ import { User } from "@/types";
 import { PACOCA_API_URL } from "@/utils/vars";
 
 interface AuthContextType {
-    user: User | null;
+    user: User;
     loginContext: (token: string, user: User, remember: boolean) => void;
     logout: (redirect?: boolean, logoutApi?: boolean, removeFromSession?: boolean) => void;
-    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    setUser: (user: User) => void;
     fetchUser: () => Promise<void>;
     addOtherAccount: () => void;
     isSuper: () => boolean;
@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { setMessage } = useMessage();
 
     // Inicializa os estados corretamente
-    const [user, setUser] = useState<User | null>(() => {
+    const [user, setUser] = useState<User>(() => {
         const storedUser = sessionStorage.getItem("user") || localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
@@ -181,7 +181,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
         setIsAuthenticated(false); // Corrigido aqui
-        setUser(null);
+        setUser({} as User); // Limpa o usuário
         setToken("");
 
 

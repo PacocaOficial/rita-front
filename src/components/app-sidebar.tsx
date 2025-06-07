@@ -6,7 +6,8 @@ import { SharedData, type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound, AmpersandIcon } from 'lucide-react';
 import AppLogo from './app-logo';
-import { isAdmin } from '@/utils/auths';
+import { isAdmin } from '@/utils/auth';
+import { useAuth } from '@/contexts/auth-context';
 
 const mainNavItems: NavItem[] = [
     // {
@@ -16,12 +17,12 @@ const mainNavItems: NavItem[] = [
     // },
     {
         title: 'Meus agendamentos',
-        href: route('appointments.index'),
+        href: "/agendamentos",
         icon: Clipboard,
     },
     {
         title: 'Agendar',
-        href: route('appointments.register'),
+        href: "agendamentos/novo",
         icon: ScrollText,
     },
 ];
@@ -55,10 +56,11 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    const page = usePage<SharedData>();
-    const { auth } = page.props;
+    // const page = usePage<SharedData>();
+    // const { auth } = page.props;
+    const { token, user } = useAuth();
 
-    if (isAdmin(auth.user)) {
+    if (isAdmin(user)) {
         const alreadyExists = mainNavItems.some(item => item.title === 'Gerenciar planos');
 
         if (!alreadyExists) {
