@@ -2,8 +2,9 @@ import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSep
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type User } from '@/types';
-import { Link, router } from '@inertiajs/react';
+// import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface UserMenuContentProps {
     user: User;
@@ -14,7 +15,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
 
     const handleLogout = () => {
         cleanup();
-        router.flushAll();
+        // router.flushAll();
     };
 
     return (
@@ -27,7 +28,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link className="block w-full" href={"/perfil/editar"} as="button" prefetch onClick={cleanup}>
+                    <Link className="cursor-pointer block w-full" to={"/perfil/editar"}>
                         <Settings className="mr-2" />
                         Configurações
                     </Link>
@@ -35,9 +36,9 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link className="block w-full" method="post" href={"/logout"} as="button" onClick={handleLogout}>
+                <Link className="cursor-pointer block w-full" to={"/logout"} onClick={handleLogout}>
                     <LogOut className="mr-2" />
-                    Log out
+                    Logout
                 </Link>
             </DropdownMenuItem>
         </>

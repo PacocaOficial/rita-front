@@ -56,20 +56,28 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    // const page = usePage<SharedData>();
-    // const { auth } = page.props;
-    const { token, user } = useAuth();
+    const { user } = useAuth();
+
+    // Gera os itens dinamicamente em vez de mutar um array fora do componente
+    const mainItems: NavItem[] = [
+        {
+            title: 'Meus agendamentos',
+            href: "/agendamentos",
+            icon: Clipboard,
+        },
+        {
+            title: 'Agendar',
+            href: "agendamentos/novo",
+            icon: ScrollText,
+        },
+    ];
 
     if (isAdmin(user)) {
-        const alreadyExists = mainNavItems.some(item => item.title === 'Gerenciar planos');
-
-        if (!alreadyExists) {
-            mainNavItems.push({
-                title: 'Gerenciar planos',
-                href: '/plans/manage',
-                icon: AmpersandIcon,
-            });
-        }
+        mainItems.push({
+            title: 'Gerenciar planos',
+            href: '/plans/manage',
+            icon: AmpersandIcon,
+        });
     }
 
     return (

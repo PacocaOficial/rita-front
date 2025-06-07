@@ -6,6 +6,8 @@ import { PACOCA_API_URL } from '@/utils/vars';
 export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: boolean }) {
     const getInitials = useInitials();
     const userImg = user?.img_account ? PACOCA_API_URL + "/" + user?.img_account.replace(/\.\.\//g, '') : null;
+    console.log(user);
+    
 
     return (
         <>
@@ -22,7 +24,7 @@ export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: 
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                {showEmail && <span className="text-muted-foreground truncate text-xs">{user.email}</span>}
+                {showEmail && <span className="text-muted-foreground truncate text-xs">@{user.user_name}</span>}
             </div>
         </>
     );
