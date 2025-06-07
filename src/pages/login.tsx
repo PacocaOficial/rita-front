@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler, use, useEffect, useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
@@ -37,7 +37,7 @@ export default function Login({ status }: LoginProps) {
     const [loading, setLoading] = useState(false);
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [error, setError] = useState<string>("");
-    const { loginContext, changeUser, removeUserFromSession } = useAuth();
+    const { loginContext } = useAuth();
 
     const submit: FormEventHandler = async (e) => {
         e.preventDefault();

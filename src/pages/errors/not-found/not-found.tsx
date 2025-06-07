@@ -56,16 +56,14 @@ export default function Welcome() {
             </p>
 
 
-            {!auth && (
-              <div className="mt-6">
-                <Link
-                  to={"/"}
-                  className="inline-block rounded-md border border-black bg-black px-5 py-2 text-white transition hover:bg-[#222] dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white"
-                >
-                  Voltar para o home
-                </Link>
+            <div className="mt-6">
+              <Link
+                to={"/"}
+                className="inline-block rounded-md border border-black bg-black px-5 py-2 text-white transition hover:bg-[#222] dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white"
+              >
+                Voltar para o home
+              </Link>
               </div>
-            )}
           </section>
 
           {/* Image section */}
