@@ -1,7 +1,7 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
-import { useLocation } from 'react-router-dom';
+// import { Link, usePage } from '@inertiajs/react';
+import { Link, useLocation } from 'react-router-dom';
 
 export function NavMain({ items = [] }: { items: NavItem[] }) {
     const location = useLocation();
@@ -16,7 +16,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                             asChild isActive={item.href === location.pathname}
                             tooltip={{ children: item.title }}
                         >
-                            <Link href={item.href} prefetch>
+                            <Link to={item.href}>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
                             </Link>
