@@ -1,12 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "@/utils/vars";
-// import { User } from "@/types";
-import { error } from "console";
 import { errorMessage } from "@/utils/text";
 import { useMessage } from "@/contexts/message-context";
 import { User } from "@/types";
+import { PACOCA_API_URL } from "@/utils/vars";
 
 interface AuthContextType {
     user: User | null;
@@ -50,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const fetchUser = async () => {
         if (!token) return; // Evita chamadas desnecessárias
         try {
-            const response = await axios.post(`${API_URL}/user`, null, {
+            const response = await axios.post(`${PACOCA_API_URL}/user`, null, {
                 headers: {
                     Accept: "application/json",
                     Authorization: `Bearer ${token}`,
@@ -62,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (response.data.warn) {
                 setMessage(`${response.data.warn.text}`, "warning", response.data.warn.title, async () => {
                     try {
-                        await axios.post(`${API_URL}/users/warn/mark-as-open/${response.data.warn.id}`, null, {
+                        await axios.post(`${PACOCA_API_URL}/users/warn/mark-as-open/${response.data.warn.id}`, null, {
                             headers: {
                                 Accept: "application/json",
                                 Authorization: `Bearer ${token}`,
@@ -163,7 +161,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Salva a lista atualizada no localStorage
         localStorage.setItem("saved_users", JSON.stringify(savedUsers));
 
-        await axios.post(`${API_URL}/logout`, {
+        await axios.post(`${PACOCA_API_URL}/logout`, {
             token: user?.token
         }, {
             headers: {
@@ -189,7 +187,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (logoutApi) {
             try {
-                await axios.post(`${API_URL}/logout`, {
+                await axios.post(`${PACOCA_API_URL}/logout`, {
                     token: user?.token
                 }, {
                     headers: {
