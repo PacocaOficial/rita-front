@@ -1,21 +1,22 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "RITA",
+  "name": "Rita, gerenciador de tarefas",
+  "description": "Rita é um gerenciador de tarefas simples e eficiente, projetado para ajudar você a organizar suas atividades diárias.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "logo/logo.png",
+      "sizes": "image/png",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo/logo.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "image/x-icon"
     },
     {
-      "src": "logo512.png",
+      "src": "logo/logo.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "image/x-icon"
     }
   ],
   "start_url": ".",

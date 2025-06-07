@@ -1,0 +1,12 @@
+.container-404{
+    justify-content: center;
+    display: flex;
+    padding-top: 150px;
+    background-color: var(--background-404)!important;
+}
+
+@media screen and (max-width: 768px) {
+    .container-404{
+        padding-top: 100px;
+    }
+}
