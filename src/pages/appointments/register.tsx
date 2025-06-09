@@ -52,11 +52,6 @@ export default function AppointmentsRegister() {
     const { token } = useAuth();
     const navigate = useNavigate();
 
-    if (isEditing) {
-        breadcrumbs[1].title = 'Editar';
-        breadcrumbs[1].href = `/appointments/${data.id}`;
-    }
-
     const submit: FormEventHandler = async (e) => {
         e.preventDefault();
         
@@ -154,6 +149,8 @@ export default function AppointmentsRegister() {
             setIsEditing(true);
             setLoadingData(true);
             loadDataEdit()
+            breadcrumbs[1].title = 'Editar';
+            breadcrumbs[1].href = `/appointments/${data.id}`;
         }
     }, [id])
     
