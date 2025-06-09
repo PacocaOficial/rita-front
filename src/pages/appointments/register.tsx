@@ -47,7 +47,7 @@ export default function AppointmentsRegister() {
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [loading, setLoading] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
-    const [errorData, setErrorData] = useState(false);
+    const [errorData, setErrorData] = useState("");
     const { id } = useParams();
     const { token } = useAuth();
     const navigate = useNavigate();
@@ -174,7 +174,7 @@ export default function AppointmentsRegister() {
                             <Label htmlFor="name">Título</Label>
 
                             <Input
-                                disabled={loadingData || errorData}
+                                disabled={loadingData || !!errorData}
                                 id="title"
                                 className={"mt-1 block w-full" + (errorsInput.title ? " border-red-500 focus:ring-red-500" : "")}
                                 value={data.title}
@@ -192,7 +192,7 @@ export default function AppointmentsRegister() {
                             <Label htmlFor="description">Descrição</Label>
 
                             <Input
-                                disabled={loadingData || errorData}
+                                disabled={loadingData || !!errorData}
                                 id="description"
                                 type="text"
                                 className={"mt-1 block w-full" + (errorsInput.description ? " border-red-500 focus:ring-red-500" : "")}
@@ -209,7 +209,7 @@ export default function AppointmentsRegister() {
 
                         <div className="flex gap-2">
                             <Checkbox
-                                disabled={loadingData || errorData}
+                                disabled={loadingData || !!errorData}
                                 id="send_notification"
                                 checked={data.send_notification}
                                 onCheckedChange={(e) => setData("send_notification", Boolean(e))}
@@ -224,7 +224,7 @@ export default function AppointmentsRegister() {
                             <Label htmlFor="description">Data do evento</Label>
 
                             <Input
-                                disabled={loadingData || errorData}
+                                disabled={loadingData || !!errorData}
                                 id="date_appointment"
                                 type="date"
                                 className={"mt-1 block w-full" + (errorsInput.date_appointment ? " border-red-500 focus:ring-red-500" : "")}
@@ -242,7 +242,7 @@ export default function AppointmentsRegister() {
                                 <Label htmlFor="description">Data para notificação</Label>
 
                                 <Input
-                                    disabled={loadingData || errorData}
+                                    disabled={loadingData || !!errorData}
                                     id="date_notification"
                                     type="date"
                                     className={"mt-1 block w-full" + (errorsInput.date_notification ? " border-red-500 focus:ring-red-500" : "")}
@@ -257,7 +257,7 @@ export default function AppointmentsRegister() {
                         ) : null}
                        
                         <div className="flex items-center gap-4">
-                            <Button disabled={loading || loadingData || errorData}>
+                            <Button disabled={loading || loadingData || !!errorData}>
                                 {loading && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                 {isEditing ? 'Atualizar' : 'Salvar'}
                             </Button>

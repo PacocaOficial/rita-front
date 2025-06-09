@@ -39,6 +39,7 @@ type AppointmentPagination = {
 export default function AppointmentsIndex() {
     const [appointments, setAppointments] = useState<AppointmentPagination>({} as AppointmentPagination);
     const [error, setError] = useState<string>("");
+    const [success, setSuccess] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const { token } = useAuth();
 
@@ -72,10 +73,21 @@ export default function AppointmentsIndex() {
         }
     }
 
+    const handleDeleteAppointment = (deletedId: number) => {
+        setSuccess("Agendamento excluido")
+        setAppointments((prev) => ({
+            ...prev,
+            data: prev.data.filter((appt) => appt.id !== deletedId), // remove localmente
+            total: prev.total - 1,
+        }));
+    };
+
+
     return (
         
         <AppLayout breadcrumbs={breadcrumbs}>
-                {error && <ErrorAlert show={!!error} message={error} onClose={() => setError("")} />}
+                {/* {error && <ErrorAlert show={!!error} message={error} onClose={() => setError("")} />} */}
+                <AlertNotification success={success} error={error}/>
 
                 <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
                     {loading ? (
@@ -110,7 +122,7 @@ export default function AppointmentsIndex() {
                                         </Button>
                                     </Link>
 
-                                    <DeleteAppointment id={appointment.id} />
+                                    <DeleteAppointment onDelete={handleDeleteAppointment} id={appointment.id} />
                                 </div>
                                 </li>
                             ))}

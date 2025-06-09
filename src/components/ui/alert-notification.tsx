@@ -11,7 +11,7 @@ export function AlertNotification({ success, error }: AlertNotificationProps) {
     useEffect(() => {
         if (success || error) {
             setVisible(true);
-            const timer = setTimeout(() => setVisible(false), 5000);
+            const timer = setTimeout(() => {setVisible(false); error = undefined; success = undefined}, 5000);
             return () => clearTimeout(timer);
         }
     }, [success, error]);
