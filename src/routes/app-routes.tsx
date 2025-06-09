@@ -7,6 +7,10 @@ import Main from "@/pages/layout";
 import RoutesAuthenticated from "./routes-authenticated";
 import AppointmentsIndex from "@/pages/appointments";
 import AppointmentsRegister from "@/pages/appointments/register";
+import PlansIndex from "@/pages/plans";
+import PlansManage from "@/pages/plans/manage";
+import PlansRegister from "@/pages/plans/register";
+import PlansDetails from "@/pages/plans/details";
 
 const AppRoutes: React.FC = () => {
 	return (
@@ -19,10 +23,12 @@ const AppRoutes: React.FC = () => {
                                 <Route path="agendamentos" element={<RoutesAuthenticated><AppointmentsIndex /></RoutesAuthenticated>} />
                                 <Route path="agendamentos/novo" element={<RoutesAuthenticated><AppointmentsRegister /></RoutesAuthenticated>} />
                                 <Route path="agendamentos/:id" element={<RoutesAuthenticated><AppointmentsRegister /></RoutesAuthenticated>} />
-                                {/* <Route path="agendamentos/:id" element={<RoutesAuthenticated><AppointmentDetails /></RoutesAuthenticated>} /> */}
-                                {/* <Route path="perfil" element={<RoutesAuthenticated><Profile /></RoutesAuthenticated>} /> */}
-                                {/* <Route path="perfil/editar" element={<RoutesAuthenticated><EditProfile /></RoutesAuthenticated>} /> */}
-                                {/* <Route path="perfil/conta" element={<RoutesAuthenticated><AccountSettings /></RoutesAuthenticated>} /> */}
+                                <Route path="agendamentos" element={<RoutesAuthenticated><AppointmentsIndex /></RoutesAuthenticated>} />
+                                
+                                <Route path="planos" element={<RoutesAuthenticated><PlansIndex /></RoutesAuthenticated>} />
+                                <Route path="planos/gerenciar" element={<RoutesAuthenticated><PlansManage /></RoutesAuthenticated>} />
+                                <Route path="planos/novo" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
+                                <Route path="planos/:id" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
 
                                 {/* não pode estar logado */}
                                 <Route path="login" element={<RoutesUnauthenticated> <Login /></RoutesUnauthenticated>} />

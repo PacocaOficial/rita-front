@@ -11,7 +11,8 @@ export const isAuthenticated = () => {
 // };
 
 export const isAdmin = (user: User | null): boolean => {
-    return !!(user && user.id <=5)
+    const admin = Boolean(user && user?.id <=5);
+    return admin;
 }
 
 export const authId = () => {

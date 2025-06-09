@@ -145,20 +145,34 @@ export default function AppointmentsRegister() {
     };
 
     useEffect(() => {
-        if(id){
+        if (id) {
             setIsEditing(true);
             setLoadingData(true);
-            loadDataEdit()
+            loadDataEdit();
             breadcrumbs[1].title = 'Editar';
-            breadcrumbs[1].href = `/appointments/${data.id}`;
+            breadcrumbs[1].href = `/appointments/${id}`;
+        } else {
+            // Resetar estado para criação
+            setIsEditing(false);
+            setData({
+                id: null,
+                title: '',
+                description: '',
+                send_notification: false,
+                date_appointment: '',
+                date_notification: '',
+            });
+            setErrorsInput({});
+            setError("");
+            setErrorData("");
+            breadcrumbs[1].title = 'Agendar';
+            breadcrumbs[1].href = `/appointments/new`;
         }
     }, [id])
     
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <AlertNotification success={success} error={error ? error : (errorData ? errorData : "")}/>
-            {/* <AlertNotification success={success} error={String(error ?? errorData)}/> */}
-
 
             <RegisterLayout title={isEditing ? "Editar" : "Agendar"} description={isEditing ? "Edite seu agendamento" : "Cadastre um novo agendamento"}>
                 <div className="space-y-6">
@@ -167,7 +181,6 @@ export default function AppointmentsRegister() {
                             <LoadingThreeCircle color='blue'/>
                         </div>
                     ) : null}
-                    {/* <HeadingSmall title="Novo Agendamento" description="Cadastre um novo agendamento" /> */}
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">

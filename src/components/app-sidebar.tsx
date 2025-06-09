@@ -11,11 +11,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { Link } from 'react-router-dom';
 
 const mainNavItems: NavItem[] = [
-    // {
-    //     title: 'Home',
-    //     href: '/dashboard',
-    //     icon: LayoutGrid,
-    // },
+
     {
         title: 'Meus agendamentos',
         href: "/agendamentos",
@@ -31,7 +27,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Planos',
-        href: '/plans',
+        href: '/planos',
         icon: ShoppingCart,
     },
     {
@@ -44,41 +40,21 @@ const footerNavItems: NavItem[] = [
         href: "https://pacoca.site",
         icon: ContactRound,
     },
-    // {
-    //     title: 'Contribua no Github',
-    //     href: 'https://github.com/JoaoEnrique/rita',
-    //     icon: Github,
-    // },
-    // {
-    //     title: 'Documentação',
-    //     href: 'https://github.com/JoaoEnrique/rita/blob/main/README.md',
-    //     icon: BookOpen,
-    // },
 ];
 
 export function AppSidebar() {
     const { user } = useAuth();
-
-    // Gera os itens dinamicamente em vez de mutar um array fora do componente
-    const mainItems: NavItem[] = [
-        {
-            title: 'Meus agendamentos',
-            href: "/agendamentos",
-            icon: Clipboard,
-        },
-        {
-            title: 'Agendar',
-            href: "/agendamentos/novo",
-            icon: ScrollText,
-        },
-    ];
-
+    
     if (isAdmin(user)) {
-        mainItems.push({
-            title: 'Gerenciar planos',
-            href: '/plans/manage',
-            icon: AmpersandIcon,
-        });
+        const alreadyExists = mainNavItems.some(item => item.title === 'Gerenciar planos');
+
+        if (!alreadyExists) {
+            mainNavItems.push({
+                title: 'Gerenciar planos',
+                href: '/planos/gerenciar',
+                icon: AmpersandIcon,
+            });
+        }
     }
 
     return (

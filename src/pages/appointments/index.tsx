@@ -86,7 +86,6 @@ export default function AppointmentsIndex() {
     return (
         
         <AppLayout breadcrumbs={breadcrumbs}>
-                {/* {error && <ErrorAlert show={!!error} message={error} onClose={() => setError("")} />} */}
                 <AlertNotification success={success} error={error}/>
 
                 <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
