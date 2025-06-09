@@ -1,5 +1,6 @@
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
+import { useAuth } from '@/contexts/auth-context';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { type User } from '@/types';
 // import { Link, router } from '@inertiajs/react';
@@ -12,9 +13,11 @@ interface UserMenuContentProps {
 
 export function UserMenuContent({ user }: UserMenuContentProps) {
     const cleanup = useMobileNavigation();
+    const { logout } = useAuth()
 
     const handleLogout = () => {
         cleanup();
+        logout(true, true, true);
         // router.flushAll();
     };
 
@@ -36,9 +39,9 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link className="cursor-pointer block w-full" to={"/logout"} onClick={handleLogout}>
+                <Link className="cursor-pointer block w-full" to={"/#"} onClick={handleLogout}>
                     <LogOut className="mr-2" />
-                    Logout
+                    Sair
                 </Link>
             </DropdownMenuItem>
         </>

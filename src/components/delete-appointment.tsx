@@ -13,7 +13,7 @@ type DeleteAppointmentProps = {
 
 export default function DeleteAppointment({ id }: DeleteAppointmentProps) {
     const { post, processing, reset, clearErrors } = useForm<Required<{ id: number }>>({ id: id });
-    const { props } = usePage();
+    // const { props } = usePage();
 
     const deleteAppointment: FormEventHandler = (e) => {
         e.preventDefault();
@@ -39,7 +39,7 @@ export default function DeleteAppointment({ id }: DeleteAppointmentProps) {
                 </Button>
             </DialogTrigger>
             <DialogContent>
-                <AlertNotification error={props.error as string | undefined}/>
+                {/* <AlertNotification error={props.error as string | undefined}/> */}
                 <DialogTitle>Tem certeza que deseja apagar esse agendamento?</DialogTitle>
                 <DialogDescription>
                     Não é possível recuperar essa ação

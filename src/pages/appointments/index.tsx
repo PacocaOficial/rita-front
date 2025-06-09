@@ -13,6 +13,7 @@ import { RITA_API_URL } from '@/utils/vars';
 import axios from "axios"
 import { errorMessage } from '@/utils/text';
 import { useAuth } from '@/contexts/auth-context';
+import { LoadingThreeCircle } from '@/components/ui/loading';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -37,8 +38,8 @@ type AppointmentPagination = {
 export default function AppointmentsIndex() {
     // const { appointments } = (usePage().props as unknown) as { appointments: AppointmentPagination };
     const [appointments, setAppointments] = useState<AppointmentPagination>({} as AppointmentPagination);
-    const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
     const { token } = useAuth();
 
     useEffect(() => {
@@ -47,6 +48,7 @@ export default function AppointmentsIndex() {
 
     const load = async() => {
         const url = `${RITA_API_URL}/appointments`;
+            setLoading(true);
 
         try {
             const response = await axios.get(url, {
@@ -57,31 +59,31 @@ export default function AppointmentsIndex() {
                 }
             });
 
-
+            
             const data = response.data;
             setAppointments(data);
-
+            
         } catch (err: any) {
-            if (err?.response?.data.errors) {
-                setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros
-            } else {
-                const messageError = errorMessage(err);
-                setError(messageError);
-                console.error("Erro ao listar: ", messageError);
-                console.error("Erro ao listar: ", err);
-            }
+            const messageError = errorMessage(err);
+            setError(messageError);
+            console.error("Erro ao listar: ", messageError);
+            console.error("Erro ao listar: ", err);
         } finally {
-            // setLoading(false);
+            setLoading(false);
         }
     }
 
     return (
         
         <AppLayout breadcrumbs={breadcrumbs}>
-            {/* <Head title="Meus Agendamentos" /> */}
                 {error && <ErrorAlert show={!!error} message={error} onClose={() => setError("")} />}
 
                 <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
+                    {loading ? (
+                        <div className='flex justify-center'>
+                            <LoadingThreeCircle color='blue'/>
+                        </div>
+                    ) : null}
                     {!appointments || appointments?.data?.length === 0 ? (
                         <p className="text-neutral-600">Nenhum agendamento encontrado.</p>
                     ) : (
@@ -109,9 +111,6 @@ export default function AppointmentsIndex() {
                                         </Button>
                                     </Link>
 
-                                    {/* <form onSubmit={(e) => deleteAppointment(e, appointment.id)}>
-                                        <Button variant="outline">Excluir</Button>
-                                    </form> */}
                                     <DeleteAppointment id={appointment.id} />
                                 </div>
                                 </li>

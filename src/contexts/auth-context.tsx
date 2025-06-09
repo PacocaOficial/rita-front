@@ -198,7 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         if (redirect) {
-            navigate("/login")
+            return navigate("/")
         }
     };
 

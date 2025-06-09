@@ -69,19 +69,19 @@ export default function Login({ status }: LoginProps) {
                 };
             }
 
-            const response = await axios.post(`${RITA_API_URL}/login`, {
+            const response = await axios.post(`${PACOCA_API_URL}/login`, {
                 login: data.login,
                 password: data.password,
                 system: "rita",
             });
 
-            loginContext(response.data.access_token, response.data.user, data.remember);
+            loginContext(response.data.access_token || response.data.token, response.data.user, data.remember);
             navigate("/agendamentos");
         } catch (err: any) {
             if (err?.response?.data.errors) {
                 setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros
             } else {
-                if (err.response.data.message === "Usuário e/ou senha incorretos") {
+                if (err?.response?.data?.message === "Usuário e/ou senha incorretos") {
                     let errors: Record<string, string[]> = {};
                     errors.password = ["Usuário e/ou senha incorretos"];
 
