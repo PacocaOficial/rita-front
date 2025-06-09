@@ -2,12 +2,13 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { SharedData, type NavItem } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+import { type NavItem } from '@/types';
+// import { Link } from '@inertiajs/react';
 import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound, AmpersandIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 import { isAdmin } from '@/utils/auth';
 import { useAuth } from '@/contexts/auth-context';
+import { Link } from 'react-router-dom';
 
 const mainNavItems: NavItem[] = [
     // {
@@ -86,7 +87,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/" prefetch>
+                            <Link to="/agendamentos">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

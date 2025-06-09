@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 export default function Welcome() {
-  const { token, user: auth } = useAuth();
+  const { isAuthenticated } = useAuth();
+  console.log(isAuthenticated);
+  
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function Welcome() {
         {/* Navbar */}
         <header className="mb-8 w-full max-w-6xl">
           <nav className="flex justify-end gap-4 text-sm">
-            {auth ? (
+            {isAuthenticated ? (
               <Link
                 to={"/agendamentos"}
                 className="rounded-md border border-[#ccc] px-4 py-1.5 text-[#1b1b18] transition hover:border-[#999] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"

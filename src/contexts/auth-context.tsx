@@ -80,9 +80,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setMessage(messageError, "error")
             console.error("Erro ao buscar usuário:", err);
 
-            // if ([401, 403].includes(status)) {
-            //     logout(false, true, true); // Desloga o usuário
-            // } 
+            if ([401, 403].includes(status)) {
+                logout(false, true, true); // Desloga o usuário
+            } 
         }
     };
 
@@ -198,7 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         if (redirect) {
-            return navigate("/")
+            return navigate("/login")
         }
     };
 

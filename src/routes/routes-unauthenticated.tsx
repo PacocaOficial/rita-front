@@ -11,7 +11,7 @@ interface ProtectedRouteUnauthenticatedProps {
 const RoutesUnauthenticated : React.FC<ProtectedRouteUnauthenticatedProps> = ({ children }) => {
     const { isAuthenticated } = useAuth();
     if (isAuthenticated) {
-        return <Navigate to="/" replace />; // Redireciona para login se não autenticado
+        return <Navigate to="/agendamentos" replace />; // Redireciona para login se não autenticado
     }
     return <>{children}</>; // Retorna os filhos se autenticado
 };

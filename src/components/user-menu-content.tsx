@@ -16,8 +16,8 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
     const { logout } = useAuth()
 
     const handleLogout = () => {
-        cleanup();
-        logout(true, true, true);
+        // cleanup();
+        logout(true, false, false);
         // router.flushAll();
     };
 
@@ -39,7 +39,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-                <Link className="cursor-pointer block w-full" to={"/#"} onClick={handleLogout}>
+                <Link className="cursor-pointer block w-full" to={"/login"} onClick={handleLogout}>
                     <LogOut className="mr-2" />
                     Sair
                 </Link>

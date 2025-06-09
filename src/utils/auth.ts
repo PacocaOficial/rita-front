@@ -43,5 +43,5 @@ export const authUser = () => {
 };
 
 export const getImageUser = (path?: string) =>{
-    return path ? `${PACOCA_API_URL}/${path}` : "/img/img-account.png";
+    return path ? `${PACOCA_API_URL}/${path}` : null;
 }

@@ -4,12 +4,10 @@ import { UserInfo } from '@/components/user-info';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useAuth } from '@/contexts/auth-context';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { type SharedData } from '@/types';
-import { usePage } from '@inertiajs/react';
 import { ChevronsUpDown } from 'lucide-react';
 
 export function NavUser() {
-    const { token, user } = useAuth();
+    const { user } = useAuth();
     const { state } = useSidebar();
     const isMobile = useIsMobile();
 
@@ -24,7 +22,7 @@ export function NavUser() {
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-white"
+                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-white dark:bg-[#161615]"
                         align="end"
                         side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
                         style={{zIndex: 999}}
