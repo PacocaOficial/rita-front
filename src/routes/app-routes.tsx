@@ -26,9 +26,12 @@ const AppRoutes: React.FC = () => {
                                 <Route path="agendamentos" element={<RoutesAuthenticated><AppointmentsIndex /></RoutesAuthenticated>} />
                                 
                                 <Route path="planos" element={<RoutesAuthenticated><PlansIndex /></RoutesAuthenticated>} />
+                                <Route path="planos/gerenciar/:id" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
+                                
                                 <Route path="planos/gerenciar" element={<RoutesAuthenticated><PlansManage /></RoutesAuthenticated>} />
                                 <Route path="planos/novo" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
-                                <Route path="planos/:id" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
+                                <Route path="planos/:id" element={<RoutesAuthenticated><PlansDetails /></RoutesAuthenticated>} />
+
 
                                 {/* não pode estar logado */}
                                 <Route path="login" element={<RoutesUnauthenticated> <Login /></RoutesUnauthenticated>} />

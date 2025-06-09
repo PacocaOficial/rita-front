@@ -169,7 +169,7 @@ export default function PlansRegister() {
             else setError(responseData?.message)
 
             if(!isEditing && responseData.plan){
-                navigate(`/planos/${responseData.plan.id}`);
+                navigate(`/planos/gerenciar/${responseData.plan.id}`);
             }
         } catch (err: any) {
             if (err?.response?.data.errors) {
@@ -191,10 +191,10 @@ export default function PlansRegister() {
 
             <RegisterLayout title={isEditing ? "Editar Plano" : "Adicionar Plano"} description={isEditing ? "Edite esse plano" : "Cadastre um novo plano"}>
                 {loadingData ? (
-                        <div className='flex justify-center'>
-                            <LoadingThreeCircle color='blue'/>
-                        </div>
-                    ) : null}
+                    <div className='flex justify-center'>
+                        <LoadingThreeCircle color='blue'/>
+                    </div>
+                ) : null}
                     
                 <div className="space-y-6">
 

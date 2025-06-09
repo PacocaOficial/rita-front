@@ -66,7 +66,7 @@ export default function PlansManage() {
             });
 
             const data = response.data;
-            setPlans(data);
+            setPlans(data.plans);
             
         } catch (err: any) {
             const messageError = errorMessage(err);
@@ -129,7 +129,7 @@ export default function PlansManage() {
                                     </div>
 
                                     <div className="mt-4 flex gap-2">
-                                        <Link to={`/planos/${plan.id}`}>
+                                        <Link to={`/planos/gerenciar/${plan.id}`}>
                                             <Button variant="outline">
                                                 <Pencil/>
                                             </Button>

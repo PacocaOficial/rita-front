@@ -57,23 +57,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setUser(response.data.user);
             saveUserToLocalStorage(response.data.user, token)
-            if (response.data.warn) {
-                setMessage(`${response.data.warn.text}`, "warning", response.data.warn.title, async () => {
-                    try {
-                        await axios.post(`${PACOCA_API_URL}/users/warn/mark-as-open/${response.data.warn.id}`, null, {
-                            headers: {
-                                Accept: "application/json",
-                                Authorization: `Bearer ${token}`,
-                            },
-                        });
-                    } catch (err: any) {
-                        const messageError = errorMessage(err)
-                        setMessage(messageError, "error", "Erro ao marcar como lido: ")
-                        console.error("Erro ao marcar como lido: ", err);
-                        console.error(messageError);
-                    }
-                })
-            }
         } catch (err: any) {
             const status = err?.response?.status;
             const messageError = errorMessage(err)

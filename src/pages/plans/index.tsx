@@ -1,5 +1,4 @@
 import { AppointmentPagination, Plan, type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
 import axios  from "axios";
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
@@ -12,6 +11,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { errorMessage } from '@/utils/text';
 import { AlertNotification } from '@/components/ui/alert-notification';
 import { LoadingThreeCircle } from '@/components/ui/loading';
+import { Link } from 'react-router-dom';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -42,11 +42,52 @@ type PlansPagination = {
 }
 
 export default function PlansIndex() {
+    const [oldValue, setOldValue] = useState<string>(sessionStorage.getItem("oldValue") || "");
+    const [value, setValue] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const [plans, setPlans] = useState<PlansPagination>({} as PlansPagination);
+    const [userPlan, setUserPlan] = useState<Plan | null>(null);
     const [error, setError] = useState<string>("");
-    
+    const [success, setSucess] = useState<string>("");
+    const [copiado, setCopiado] = useState(false);
+    const [qrCode, setQrCode] = useState<any>(() => {
+        const savedQrCode = sessionStorage.getItem("qrCode");
+        return savedQrCode ? JSON.parse(savedQrCode) : null;
+    });
+    const [pix, setPix] = useState<any>(() => {
+        const savedPix = sessionStorage.getItem("pix");
+        return savedPix ? JSON.parse(savedPix) : null;
+    });
+    const copyLink = async () => {
+        try {
+            await navigator.clipboard.writeText(pix.pixCopiaECola);
+            setCopiado(true);
+            setTimeout(() => setSucess("Código Copiado")); // Mensagem desaparece após 2 segundos
+            setTimeout(() => setCopiado(false), 2000); // Mensagem desaparece após 2 segundos
+        } catch (err) {
+            console.error("Erro ao copiar:", err);
+        }
+    };
+
+    const cancel = () =>{
+        setOldValue("");
+        setValue("");
+        setLoading(false);
+        setQrCode(null);
+        setPix(null);
+
+        sessionStorage.removeItem("qrCode")
+        sessionStorage.removeItem("pix")
+        sessionStorage.removeItem("oldValue")
+    }
+
+    useEffect(() => {
+        if (qrCode) sessionStorage.setItem("qrCode", JSON.stringify(qrCode));
+        if (pix) sessionStorage.setItem("pix", JSON.stringify(pix));
+        if (value) sessionStorage.setItem("oldValue", value);
+    }, [qrCode, pix, value]);
+
     useEffect(() => {
         load()
     }, [])
@@ -65,7 +106,15 @@ export default function PlansIndex() {
             });
 
             const data = response.data;
-            setPlans(data);
+            setPlans(data.plans);
+            setUserPlan(data?.user_plan)
+            setOldValue(data?.total)
+            setQrCode(data?.qrcode)
+            setPix(data?.pix)
+
+            console.log(data?.user_plan);
+            console.log(data.plans);
+            
             
         } catch (err: any) {
             const messageError = errorMessage(err);
@@ -106,7 +155,7 @@ export default function PlansIndex() {
                                         </p>
                                     </div>
                                     <div className="mt-6">
-                                        {plan.value === 0 ? (
+                                        {(!userPlan && plan.value === 0) ||  (userPlan?.id === plan.id) ? (
                                             <div className="mt-6">
                                                 <Button
                                                     variant="outline"
@@ -116,7 +165,7 @@ export default function PlansIndex() {
                                                 </Button>
                                             </div>
                                         ) : (
-                                            <Link href={`/planos/detalhes/${plan.id}`}>
+                                            <Link to={`/planos/${plan.id}`}>
                                                 <Button variant="default" className="w-full">
                                                     {`${formattMoneyBRL(Number(plan.value))}`}
                                                 </Button>
