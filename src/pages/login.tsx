@@ -34,7 +34,6 @@ export default function Login({ status }: LoginProps) {
         password: '',
         remember: false,
     });
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [error, setError] = useState<string>("");
@@ -99,7 +98,6 @@ export default function Login({ status }: LoginProps) {
             });
 
             loginContext(response.data.access_token || response.data.token, response.data.user, data.remember);
-            // navigate("/agendamentos");
         } catch (err: any) {
             if (err?.response?.data.errors) {
                 setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros
@@ -115,7 +113,6 @@ export default function Login({ status }: LoginProps) {
                     console.error("Erro ao logar: ", messageError);
                     console.error("Erro ao logar: ", err);
                 }
-                
             }
         } finally {
             setLoading(false);

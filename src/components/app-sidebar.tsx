@@ -23,7 +23,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Agendar',
-        href: "agendamentos/novo",
+        href: "/agendamentos/novo",
         icon: ScrollText,
     },
 ];
@@ -68,7 +68,7 @@ export function AppSidebar() {
         },
         {
             title: 'Agendar',
-            href: "agendamentos/novo",
+            href: "/agendamentos/novo",
             icon: ScrollText,
         },
     ];

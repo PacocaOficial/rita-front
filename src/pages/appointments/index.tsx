@@ -37,7 +37,6 @@ type AppointmentPagination = {
 }
 
 export default function AppointmentsIndex() {
-    // const { appointments } = (usePage().props as unknown) as { appointments: AppointmentPagination };
     const [appointments, setAppointments] = useState<AppointmentPagination>({} as AppointmentPagination);
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);

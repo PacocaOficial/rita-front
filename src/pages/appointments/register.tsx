@@ -1,6 +1,6 @@
-import { Appointment, type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
 
 import InputError from '@/components/input-error';
@@ -11,11 +11,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/app-layout';
 import RegisterLayout from '@/layouts/appointments/register';
 import { AlertNotification } from '@/components/ui/alert-notification';
-// import { Dialog } from '@radix-ui/react-dialog';
 import axios from "axios"
 import { RITA_API_URL } from '@/utils/vars';
 import { errorMessage } from '@/utils/text';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
 import { LoadingThreeCircle } from '@/components/ui/loading';
 import { LoaderCircle } from 'lucide-react';
@@ -42,7 +41,7 @@ type ProfileForm = {
 
 export default function AppointmentsRegister() {
     const [isEditing, setIsEditing] = useState(false);
-    const { data, setData, errors, recentlySuccessful } = useForm<Required<ProfileForm>>();
+    const { data, setData, recentlySuccessful } = useForm<Required<ProfileForm>>();
     const [error, setError] = useState<string>("");
     const [success, setSuccess] = useState<string>("");
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
@@ -51,6 +50,7 @@ export default function AppointmentsRegister() {
     const [errorData, setErrorData] = useState(false);
     const { id } = useParams();
     const { token } = useAuth();
+    const navigate = useNavigate();
 
     if (isEditing) {
         breadcrumbs[1].title = 'Editar';
@@ -78,7 +78,7 @@ export default function AppointmentsRegister() {
                 errors.date_appointment = ["O campo data é obrigatório."];
             }
             if (data.send_notification && !data.date_notification) {
-                errors.date_appointment = ["O campo data é obrigatório."];
+                errors.date_notification = ["O campo data é obrigatório."];
             }
 
             if (Object.keys(errors).length > 0) {
@@ -106,6 +106,10 @@ export default function AppointmentsRegister() {
 
             if(responseData?.success) setSuccess(responseData?.message)
             else setError(responseData?.message)
+
+            if(!isEditing && responseData.appointment){
+                navigate(`/agendamentos/${responseData.appointment.id}`);
+            }
         } catch (err: any) {
             if (err?.response?.data.errors) {
                 setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros
@@ -244,7 +248,7 @@ export default function AppointmentsRegister() {
                                     disabled={loadingData || errorData}
                                     id="date_notification"
                                     type="date"
-                                    className={"mt-1 block w-full" + errorsInput.date_notification ? " border-red-500 focus:ring-red-500" : ""}
+                                    className={"mt-1 block w-full" + (errorsInput.date_notification ? " border-red-500 focus:ring-red-500" : "")}
                                     value={data.date_notification}
                                     onChange={(e) => setData('date_notification', e.target.value)}
                                 />
