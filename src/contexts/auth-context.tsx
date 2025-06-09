@@ -75,19 +75,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 })
             }
         } catch (err: any) {
-            // if (err.response) {
-                const status = err?.response?.status;
-                const messageError = errorMessage(err)
-                setMessage(messageError, "error")
-                console.error("Erro ao buscar usuário:", err);
+            const status = err?.response?.status;
+            const messageError = errorMessage(err)
+            setMessage(messageError, "error")
+            console.error("Erro ao buscar usuário:", err);
 
-                if ([401, 403].includes(status)) {
-                    logout(false, true, true); // Desloga o usuário
-                } 
-
-            // } else {
-            //     setMessage("Você está sem conexão com a internet", "error");
-            // }
+            // if ([401, 403].includes(status)) {
+            //     logout(false, true, true); // Desloga o usuário
+            // } 
         }
     };
 

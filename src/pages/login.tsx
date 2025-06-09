@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
-import { PACOCA_API_URL } from '@/utils/vars';
+import { PACOCA_API_URL, RITA_API_URL } from '@/utils/vars';
 import ErrorAlert from '@/components/alerts/alert-error';
 import { errorMessage } from '@/utils/text';
 
@@ -69,16 +69,14 @@ export default function Login({ status }: LoginProps) {
                 };
             }
 
-            console.log(`${PACOCA_API_URL}/login`);
-            
-            const response = await axios.post(`${PACOCA_API_URL}/login`, {
+            const response = await axios.post(`${RITA_API_URL}/login`, {
                 login: data.login,
                 password: data.password,
                 system: "rita",
             });
 
             loginContext(response.data.access_token, response.data.user, data.remember);
-            navigate("/");
+            navigate("/agendamentos");
         } catch (err: any) {
             if (err?.response?.data.errors) {
                 setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros

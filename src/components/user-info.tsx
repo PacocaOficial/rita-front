@@ -6,8 +6,6 @@ import { PACOCA_API_URL } from '@/utils/vars';
 export function UserInfo({ user, showEmail = false }: { user: User; showEmail?: boolean }) {
     const getInitials = useInitials();
     const userImg = user?.img_account ? PACOCA_API_URL + "/" + user?.img_account.replace(/\.\.\//g, '') : null;
-    console.log(user);
-    
 
     return (
         <>

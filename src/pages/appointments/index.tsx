@@ -7,8 +7,12 @@ import IndexLayout from '@/layouts/appointments/index';
 import { AlertNotification } from '@/components/ui/alert-notification';
 import DeleteAppointment from '@/components/delete-appointment';
 import { Pencil } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorAlert from '@/components/alerts/alert-error';
+import { RITA_API_URL } from '@/utils/vars';
+import axios from "axios"
+import { errorMessage } from '@/utils/text';
+import { useAuth } from '@/contexts/auth-context';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,6 +39,41 @@ export default function AppointmentsIndex() {
     const [appointments, setAppointments] = useState<AppointmentPagination>({} as AppointmentPagination);
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [error, setError] = useState<string>("");
+    const { token } = useAuth();
+
+    useEffect(() => {
+        load()
+    }, [])
+
+    const load = async() => {
+        const url = `${RITA_API_URL}/appointments`;
+
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+
+            const data = response.data;
+            setAppointments(data);
+
+        } catch (err: any) {
+            if (err?.response?.data.errors) {
+                setErrorsInput(err.response.data.errors); // Atualiza o estado com os erros
+            } else {
+                const messageError = errorMessage(err);
+                setError(messageError);
+                console.error("Erro ao listar: ", messageError);
+                console.error("Erro ao listar: ", err);
+            }
+        } finally {
+            // setLoading(false);
+        }
+    }
 
     return (
         
