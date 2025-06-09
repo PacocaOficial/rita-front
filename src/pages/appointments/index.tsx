@@ -1,5 +1,5 @@
 import { Appointment, type BreadcrumbItem } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
+// import { Link, usePage } from '@inertiajs/react';
 
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
@@ -14,6 +14,7 @@ import axios from "axios"
 import { errorMessage } from '@/utils/text';
 import { useAuth } from '@/contexts/auth-context';
 import { LoadingThreeCircle } from '@/components/ui/loading';
+import { Link } from 'react-router-dom';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -59,7 +60,6 @@ export default function AppointmentsIndex() {
                 }
             });
 
-            
             const data = response.data;
             setAppointments(data);
             
@@ -105,7 +105,7 @@ export default function AppointmentsIndex() {
                                 </div>
 
                                 <div className="mt-4 flex gap-2">
-                                    <Link href={`/appointments/${appointment.id}`}>
+                                    <Link to={`/agendamentos/${appointment.id}`}>
                                         <Button variant="outline">
                                             <Pencil/>
                                         </Button>
@@ -121,7 +121,7 @@ export default function AppointmentsIndex() {
                     {appointments.per_page < appointments.total && (
                         <div className="flex gap-2 mt-4">
                             {appointments.links.map((link, index) => (
-                                <Link key={index} href={link.url ?? ''} className={"..."}>
+                                <Link key={index} to={link.url ?? ''} className={"..."}>
                                     {link.label.replace(/&laquo;|&raquo;/g, '').trim() || '...'}
                                 </Link>
                             ))}

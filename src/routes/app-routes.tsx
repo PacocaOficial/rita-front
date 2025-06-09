@@ -6,6 +6,7 @@ import Login from "@/pages/login";
 import Main from "@/pages/layout";
 import RoutesAuthenticated from "./routes-authenticated";
 import AppointmentsIndex from "@/pages/appointments";
+import AppointmentsRegister from "@/pages/appointments/register";
 
 const AppRoutes: React.FC = () => {
 	return (
@@ -16,6 +17,8 @@ const AppRoutes: React.FC = () => {
 
                                 {/* rotas autenticadas */}
                                 <Route path="agendamentos" element={<RoutesAuthenticated><AppointmentsIndex /></RoutesAuthenticated>} />
+                                <Route path="agendamentos/novo" element={<RoutesAuthenticated><AppointmentsRegister /></RoutesAuthenticated>} />
+                                <Route path="agendamentos/:id" element={<RoutesAuthenticated><AppointmentsRegister /></RoutesAuthenticated>} />
                                 {/* <Route path="agendamentos/:id" element={<RoutesAuthenticated><AppointmentDetails /></RoutesAuthenticated>} /> */}
                                 {/* <Route path="perfil" element={<RoutesAuthenticated><Profile /></RoutesAuthenticated>} /> */}
                                 {/* <Route path="perfil/editar" element={<RoutesAuthenticated><EditProfile /></RoutesAuthenticated>} /> */}
