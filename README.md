@@ -1,22 +1,49 @@
-# RITA  - Frontend
-Site de envio de notificação por WhatsApp com sistema de pagamentos e integração com o Paçoca 
+# RITA - Frontend
 
-## Backend
-Baixe o backend em: https://github.com/PacocaOficial/rita-back
+Sistema de envio de notificações via WhatsApp com sistema de pagamentos e integração com o Paçoca.
 
-## Tecnologias Utilizadas
-- **React**: IA utilizada para analisar o conteúdo dos posts
-- **Node com TypeScript**: Integração com WhatsApp
-- **Axios**: Relaliza as requisições para API
-- **Tailwind CSS**: Para estilo
+## 🔗 Backend
 
-## Como Funciona
-1. Cadastre ou entre com sua conta do Paçoca, escolha o melhor plano para você e cadastre seus agendamentos, ou tarefas para serem enviados por WhatsApp.
+Repositório do backend: [PacocaOficial/rita-back](https://github.com/PacocaOficial/rita-back)
 
-## Instalação e Execução
 
-1. Clone este repositório:
-   ```sh
+## ✅ Requisitos
+Antes de iniciar, certifique-se de que você tem as seguintes ferramentas instaladas na sua máquina:
+
+- **Node.js**: ^18.x (ou superior)  
+  [Download Node.js](https://nodejs.org/)
+
+- **npm** ou **yarn**: Gerenciador de pacotes  
+  npm já vem com o Node.js, mas você pode instalar o [Yarn](https://classic.yarnpkg.com/en/docs/install) se preferir.
+
+- **Git**: Para clonar o repositório  
+  [Download Git](https://git-scm.com/)
+
+- **Backend funcionando**: O projeto depende da API do backend. Siga as instruções no repositório [PacocaOficial/rita-back](https://github.com/PacocaOficial/rita-back) para configurá-lo corretamente.
+
+- **Editor de código** (recomendado): [Visual Studio Code](https://code.visualstudio.com/)
+
+
+## 🛠 Tecnologias Utilizadas
+
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário  
+- **Node.js com TypeScript**: Backend para integração com WhatsApp  
+- **Axios**: Cliente HTTP para requisições à API  
+- **Tailwind CSS**: Framework de estilo utilitário para CSS  
+
+
+## 🚀 Como Funciona
+
+1. Cadastre ou entre com sua conta do Paçoca.  
+2. Escolha o melhor plano para você.  
+3. Cadastre seus agendamentos ou tarefas.  
+4. As mensagens serão enviadas automaticamente via WhatsApp.
+
+ 
+## ⚙️ Instalação e Execução
+
+1. **Clone o repositório:**
+   ```bash
    git clone https://github.com/PacocaOficial/rita-front
    cd rita-front
    ```
