@@ -3,57 +3,28 @@ name: prod
 on:
   pull_request:
     branches: [main]
-
   workflow_dispatch:
 
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout do repositório
       uses: actions/checkout@v2
 
-    - name: Cache npm
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
+    - name: Instalar dependências e gerar build
+      run: |
+        npm ci --legacy-peer-deps
+        npm run build
 
-    - name: Copiar arquivos para VPS
+    - name: Copiar build para o servidor
       uses: easingthemes/ssh-deploy@main
       with:
-        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-        ARGS: "-avz"
-        SOURCE: "./"
-        REMOTE_HOST: ${{secrets.REMOTE_HOST}}
-        REMOTE_USER: ${{secrets.REMOTE_USER}}
-        REMOTE_PORT: ${{secrets.REMOTE_PORT}}
-        TARGET: ${{secrets.TARGET_PRODUCTION}}
-
-    - name: "Build da aplicação"
-      uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-            cd ${{secrets.TARGET_PRODUCTION}}
-            npm install --legacy-peer-deps
-            npm run build
-            chown -R  www-data:www-data .
-            sudo chmod -R 755 .
-    
-    - name: "Substituir build por novo conteúdo"
-      uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-            # Substituir a pasta build pela versão atualizada
-            rsync -av --delete ${{secrets.TARGET_PRODUCTION}}/temp_build/ ${{secrets.TARGET_PRODUCTION}}/
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        ARGS: "-avz --delete"
+        SOURCE: "build/"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+        TARGET: ${{ secrets.TARGET_PRODUCTION }}
