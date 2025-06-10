@@ -11,7 +11,7 @@ import PlansIndex from "@/pages/plans";
 import PlansManage from "@/pages/plans/manage";
 import PlansRegister from "@/pages/plans/register";
 import PlansDetails from "@/pages/plans/details";
-
+ 
 const AppRoutes: React.FC = () => {
 	return (
                 <Routes>
