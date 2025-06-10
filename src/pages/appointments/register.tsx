@@ -2,7 +2,6 @@ import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
-
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -77,7 +76,6 @@ export default function AppointmentsRegister() {
             }
 
             if (Object.keys(errors).length > 0) {
-                
                 // eslint-disable-next-line no-throw-literal
                 throw {
                     response: {

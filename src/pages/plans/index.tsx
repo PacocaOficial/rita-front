@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Plan, type BreadcrumbItem } from '@/types';
 import axios  from "axios";
 import { Button } from '@/components/ui/button';

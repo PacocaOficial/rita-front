@@ -159,7 +159,6 @@ export default function PlansDetails() {
             
 
             if (Object.keys(errors).length > 0) {
-                
                 // eslint-disable-next-line no-throw-literal
                 throw {
                     response: {
