@@ -71,3 +71,4 @@ Antes de iniciar, certifique-se de que você tem as seguintes ferramentas instal
 ## Licença
 Este projeto está licenciado sob a [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR).  
 Você pode copiar, modificar e redistribuir para fins **não comerciais**, desde que atribua os créditos ao autor original.
+```
