@@ -1,30 +1,29 @@
-import { Appointment, QRCode, type BreadcrumbItem } from '@/types';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
-
-import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import RegisterLayout from '@/layouts/appointments/register';
 import { AlertNotification } from '@/components/ui/alert-notification';
-import { formattMoneyBRL } from '@/utils/utils';
+import {formattMoneyBRL } from "@/utils/utils";
 import { Clapperboard, CreditCard, LoaderCircle, ShoppingCart } from 'lucide-react';
-// import { Dialog } from '@radix-ui/react-dialog';
 import axios from 'axios';
 import { RITA_API_URL } from '@/utils/vars';
 import { useAuth } from '@/contexts/auth-context';
 import { errorMessage } from '@/utils/text';
 import { useParams } from 'react-router-dom';
 import { LoadingThreeCircle } from '@/components/ui/loading';
+import InputError from '@/components/input-error';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Planos',
         href: '/appointments',
-    },
+    }
 ];
 
 export interface Plan {
@@ -39,12 +38,12 @@ export interface Plan {
 }
 
 export default function PlansDetails() {
-    // const { appointment } = usePage().props as unknown as { appointment: Appointment };
-    // const { plan } = usePage().props as unknown as { plan: Plan };
     const [oldValue, setOldValue] = useState<string>(sessionStorage.getItem("oldValue") || "");
     const [value, setValue] = useState<string>("");
-    const { data, setData, post, errors, processing, recentlySuccessful } = useForm<Required<Plan>>();
-    const [plan, setPlan] = useState<Plan | null>(null);
+    const savedPlan = sessionStorage.getItem("planQrCode");
+    const initialPlan: Required<Plan> = savedPlan ? JSON.parse(savedPlan) : {};
+    const [ planQrCode, setPlanQrCode ] = useState<Plan | null>(initialPlan);
+    const { data, setData, recentlySuccessful } = useForm<Required<Plan>>();
     const [total, setTotal] = useState<number>(0);
     const [success, setSuccess] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -77,6 +76,7 @@ export default function PlansDetails() {
     };
 
     const cancel = () =>{
+        setPlanQrCode(null);
         setOldValue("");
         setValue("");
         setLoading(false);
@@ -94,14 +94,6 @@ export default function PlansDetails() {
         if (value) sessionStorage.setItem("oldValue", value);
     }, [qrCode, pix, value]);
 
-    const alreadyExists = breadcrumbs.some(item => item.title === data.name);
-
-    if(!alreadyExists){
-        breadcrumbs.push({
-                title: data.name,
-                href: `/planos/${id}`,
-        });
-    }
 
     useEffect(() => {
         const months = isNaN(Number(data.months)) ? 0 : Number(data.months);
@@ -111,25 +103,18 @@ export default function PlansDetails() {
     }, [data.months, data.value])
 
     useEffect(() => {
+        const alreadyExists = breadcrumbs.some(item => item.title === data.name);
+        if(!alreadyExists){
+            breadcrumbs.push({
+                title: data.name,
+                href: `/planos/${id}`,
+            });
+        }
+
         if (id) {
             loadDataEdit();
-            breadcrumbs[1].title = 'Editar';
-            breadcrumbs[1].href = `/planos/${id}`;
-        } else {
-            // Resetar estado para criação
-            setPlan({
-                id: null,
-                name: '',
-                description: '',
-                value: null,
-                quantty_appointments: null,
-                icon: '',
-                color: '',
-            });
             setError("");
             setErrorData("");
-            breadcrumbs[1].title = 'Agendar';
-            breadcrumbs[1].href = `/planos/novo`;
         }
     }, [id]);
 
@@ -151,8 +136,8 @@ export default function PlansDetails() {
         } catch (err: any) {
             const messageError = errorMessage(err);
             setErrorData(messageError);
-            console.error("Erro ao logar: ", messageError);
-            console.error("Erro ao logar: ", err);
+            console.error("Erro ao carregar dados: ", messageError);
+            console.error("Erro ao carregar dados: ", err);
         } finally {
             setLoadingData(false);
         }
@@ -198,8 +183,8 @@ export default function PlansDetails() {
                 },
             })
             const responseData = response?.data;
-            console.log(responseData);
-            
+            sessionStorage.setItem("planQrCode", JSON.stringify(data));
+            setPlanQrCode(data);
 
             if(responseData?.success) {
                 setSuccess(responseData?.message)
@@ -264,12 +249,46 @@ export default function PlansDetails() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
 
-            <AlertNotification success={success} error={error}/>
+            <AlertNotification success={success} error={error ? error : (errorData ? errorData : "")}/>
 
             <RegisterLayout title={`Detalhes do Plano ${data.name ? `: ${data.name}` : ""}`} description="Compre o plano e pague por pix">
                 <div className="space-y-6">
 
-                        {!qrCode ? (
+                        {qrCode && planQrCode?.id && planQrCode?.id === data.id  ? (
+                            <>
+                                <p className="w-100">Pague pelo QRCode ou copie o código no seu banco favorito:</p>
+                                <h3 className="w-100 text-center" style={{marginTop: ""}}>{`${formattMoneyBRL(Number(oldValue || total))}`}</h3>
+                                
+                                <div className="d-flex">
+                                    <img src={qrCode.imagemQrcode} width="300" alt="QR Code PIX" style={{margin: "0 auto"}}/>
+                                </div>
+
+                                <div className="flex flex-wrap gap-4 mt-4">
+                                    <button
+                                        onClick={copyLink}
+                                        type="button"
+                                        className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition"
+                                    >
+                                        <Clapperboard className="w-5 h-5" />
+                                        {copiado ? "Copiado!" : "Copiar código"}
+                                    </button>
+
+                                    <button disabled={loadingVerifyPayment} onClick={() => verifyPayment(true)} type="button" className="cursor-pointer flex items-center gap-2 px-4 py-2 ml-2 bg-blue-600 text-white rounded-2xl shadow-md transition hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" style={{marginLeft: "10px"}}>
+                                        {loadingVerifyPayment ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <CreditCard style={{height: "20px", marginRight: "9px"}}/> } 
+                                        Verificar Pagamento
+                                    </button>
+
+
+                                    <button
+                                        onClick={cancel}
+                                        type="button"
+                                        className="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded-2xl shadow-md hover:bg-gray-300 transition"
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
                             <form onSubmit={submit} className="space-y-6">
                                 {loadingData ? (
                                     <div className='flex justify-center'>
@@ -277,95 +296,61 @@ export default function PlansDetails() {
                                     </div>
                                 ) : (
                                     <>
-                                
-                                        <div className="grid gap-2">
-                                                <Label htmlFor="name">Valor do plano por mês:  {`${formattMoneyBRL(Number(data.value))}`}</Label>
-                                        </div>
+                                        { !errorData ? (
+                                            <>
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="name">Valor do plano por mês:  {`${formattMoneyBRL(Number(data.value))}`}</Label>
+                                                </div>
 
-                                        <div className="grid gap-2">
-                                        <Label htmlFor="name">Quantidade de agendamentos por mês:  {data.quantty_appointments}</Label>
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="name">Quantidade de agendamentos por mês:  {data.quantty_appointments}</Label>
+                                                </div>
 
-                                        </div>
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="name">Tempo em meses</Label>
 
-                                        <div className="grid gap-2">
-                                        <Label htmlFor="name">Tempo em meses</Label>
+                                                    <Input
+                                                        id="months"
+                                                        type='number'
+                                                        className="mt-1 block w-full"
+                                                        value={data.months}
+                                                        onChange={(e) => setData('months', e.target.value)}
+                                                        required
+                                                        min={1}
+                                                        autoComplete="months"
+                                                        placeholder="Tempo em meses"
+                                                    />
+                                                    {errorsInput.months && (
+                                                        <InputError message={errorsInput.months[0]} />
+                                                    )}
 
-                                        <Input
-                                                id="months"
-                                                type='number'
-                                                className="mt-1 block w-full"
-                                                value={data.months}
-                                                onChange={(e) => setData('months', e.target.value)}
-                                                required
-                                                min={1}
-                                                autoComplete="months"
-                                                placeholder="Tempo em meses"
-                                        />
+                                                </div>
 
-                                        </div>
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="name">Valor total:  {`${formattMoneyBRL(Number(total))}`}</Label>
+                                                </div>
 
-                                        <div className="grid gap-2">
-                                        <Label htmlFor="name">Valor total:  {`${formattMoneyBRL(Number(total))}`}</Label>
+                                                <div className="flex items-center gap-4">
+                                                    <Button disabled={loading || loadingData || !!errorData}>
+                                                        {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShoppingCart/>}
+                                                        Gerar QR Code para pagamento
+                                                    </Button>
 
-                                        </div>
-
-                                        <div className="flex items-center gap-4">
-                                            <Button disabled={loading || loadingData || !!errorData}>
-                                                {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShoppingCart/>}
-                                                Gerar QR Code para pagamento
-                                        </Button>
-
-                                        <Transition
-                                                show={recentlySuccessful}
-                                                enter="transition ease-in-out"
-                                                enterFrom="opacity-0"
-                                                leave="transition ease-in-out"
-                                                leaveTo="opacity-0"
-                                        >
-                                                <p className="text-sm text-neutral-600">Salvo</p>
-                                        </Transition>
-                                        </div>
+                                                    <Transition
+                                                            show={recentlySuccessful}
+                                                            enter="transition ease-in-out"
+                                                            enterFrom="opacity-0"
+                                                            leave="transition ease-in-out"
+                                                            leaveTo="opacity-0"
+                                                    >
+                                                            <p className="text-sm text-neutral-600">Salvo</p>
+                                                    </Transition>
+                                                </div>
+                                            </>
+                                        ) : null}
                                     </>
                                 )}
                         </form>
-                        ) : (
-                            <>
-                                {qrCode ? (
-                                    <>
-                                        <p className="w-100">Pague pelo QRCode ou copie o código no seu banco favorito:</p>
-                                        <h3 className="w-100 text-center" style={{marginTop: ""}}>{`${formattMoneyBRL(Number(oldValue || total))}`}</h3>
-                                        
-                                        <div className="d-flex">
-                                            <img src={qrCode.imagemQrcode} width="300" alt="QR Code PIX" style={{margin: "0 auto"}}/>
-                                        </div>
-
-                                        <div className="flex flex-wrap gap-4 mt-4">
-                                            <button
-                                                onClick={copyLink}
-                                                type="button"
-                                                className="cursor-pointer flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition"
-                                            >
-                                                <Clapperboard className="w-5 h-5" />
-                                                {copiado ? "Copiado!" : "Copiar código"}
-                                            </button>
-
-                                            <button disabled={loadingVerifyPayment} onClick={() => verifyPayment(true)} type="button" className="cursor-pointer flex items-center gap-2 px-4 py-2 ml-2 bg-blue-600 text-white rounded-2xl shadow-md transition hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" style={{marginLeft: "10px"}}>
-                                                {loadingVerifyPayment ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <CreditCard style={{height: "20px", marginRight: "9px"}}/> } 
-                                                Verificar Pagamento
-                                            </button>
-
-
-                                            <button
-                                                onClick={cancel}
-                                                type="button"
-                                                className="cursor-pointer px-4 py-2 bg-gray-200 text-gray-800 rounded-2xl shadow-md hover:bg-gray-300 transition"
-                                            >
-                                                Cancelar
-                                            </button>
-                                        </div>
-                                    </>
-                                ) : null}
-                            </>
                         )}
                     
                 </div>

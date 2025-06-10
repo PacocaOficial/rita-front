@@ -1,4 +1,4 @@
-import { AppointmentPagination, Plan, type BreadcrumbItem } from '@/types';
+import { Plan, type BreadcrumbItem } from '@/types';
 import axios from "axios";
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';

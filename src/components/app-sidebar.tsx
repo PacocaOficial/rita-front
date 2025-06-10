@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 // import { Link } from '@inertiajs/react';
-import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound, AmpersandIcon } from 'lucide-react';
+import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound, AmpersandIcon, MessageCircle } from 'lucide-react';
 import AppLogo from './app-logo';
 import { isAdmin } from '@/utils/auth';
 import { useAuth } from '@/contexts/auth-context';
@@ -39,6 +39,11 @@ const footerNavItems: NavItem[] = [
         title: 'Paçoca - Rede Social',
         href: "https://pacoca.site",
         icon: ContactRound,
+    },
+    {
+        title: 'Cronos - Chat',
+        href: "https://cronos.pacoca.site",
+        icon: MessageCircle,
     },
 ];
 

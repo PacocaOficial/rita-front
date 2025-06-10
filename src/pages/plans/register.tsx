@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import axios from "axios";
 import InputError from '@/components/input-error';
@@ -16,7 +17,6 @@ import { errorMessage } from '@/utils/text';
 import { useAuth } from '@/contexts/auth-context';
 import { LoaderCircle } from 'lucide-react';
 import { LoadingThreeCircle } from '@/components/ui/loading';
-// import { Dialog } from '@radix-ui/react-dialog';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -41,7 +41,7 @@ export interface Plan {
 
 export default function PlansRegister() {
     const [isEditing, setIsEditing] = useState(false);
-    const { data, setData, post, patch, errors, processing, recentlySuccessful } = useForm<Required<Plan>>();
+    const { data, setData, errors, recentlySuccessful } = useForm<Required<Plan>>();
     const [errorsInput, setErrorsInput] = useState<Record<string, string[]>>({});
     const [loading, setLoading] = useState(false);
     const [loadingData, setLoadingData] = useState(false);
