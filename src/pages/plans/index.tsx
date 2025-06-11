@@ -104,14 +104,14 @@ export default function PlansIndex() {
                     <ul className="flex flex-wrap gap-4 items-stretch mt-4 ">
                         {plans?.data?.map((plan) => {
                             return (
-                                <li key={plan.id} className="mb=4 flex flex-col justify-between border rounded-lg p-6 shadow-md w-full md:w-[calc(33.333%-1rem)] bg-zinc-900">
+                                <li key={plan.id} className="mb=4 flex flex-col justify-between border rounded-lg p-6 shadow-md w-full md:w-[calc(33.333%-1rem)] dark:bg-zinc-900">
                                     <div>
                                         <div className={`flex items-center gap-2 mb-4 ${plan.color}`}>
                                             {plan.icon && <LucideIcon name={plan.icon} />}
 
                                             <h3 className="text-xl font-bold">{plan.name}</h3>
                                         </div>
-                                        <p className="text-sm text-neutral-300">
+                                        <p className="text-sm dark:text-neutral-300 text-neutral-500">
                                             {plan.description}
                                         </p>
                                     </div>
