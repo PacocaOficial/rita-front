@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { type BreadcrumbItem } from '@/types';
+import { UserPlan, type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import RegisterLayout from '@/layouts/appointments/register';
 import { AlertNotification } from '@/components/ui/alert-notification';
-import {formattMoneyBRL } from "@/utils/utils";
+import {calculateEndDate, formatDateDDMMYYYY, formattMoneyBRL } from "@/utils/utils";
 import { Clapperboard, CreditCard, LoaderCircle, ShoppingCart } from 'lucide-react';
 import axios from 'axios';
 import { RITA_API_URL } from '@/utils/vars';
@@ -45,6 +45,9 @@ export default function PlansDetails() {
     const initialPlan: Required<Plan> = savedPlan ? JSON.parse(savedPlan) : {};
     const [ planQrCode, setPlanQrCode ] = useState<Plan | null>(initialPlan);
     const { data, setData, recentlySuccessful } = useForm<Required<Plan>>();
+    const [userPlan, setUserPlan] = useState<UserPlan | null>(null);
+    // const [ userPlan, setUserPlan ] = useState<Plan | null>(null);
+    const [ isUserPlan, setIsUserPlan ] = useState<boolean>(false);
     const [total, setTotal] = useState<number>(0);
     const [success, setSuccess] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -132,8 +135,9 @@ export default function PlansDetails() {
             });
 
             const data = response.data
-            setData(data);
-
+            setData(data.plan);
+            setIsUserPlan(data.plan.id === data?.userPlan?.plan?.id)
+            setUserPlan(data.userPlan);
         } catch (err: any) {
             const messageError = errorMessage(err);
             setErrorData(messageError);
@@ -222,11 +226,10 @@ export default function PlansDetails() {
 
             if(response?.data?.success){
                 setSuccess(response?.data?.message);
-                cancel()
-                setTimeout(() => window.location.reload(), 1000)
+                // setTimeout(() => window.location.reload(), 1000)
             }
 
-            if(manual && !response.data.sucess){
+            if(manual && !response.data.success){
                 setSuccess(`Pagamento não confirmado, espere mais alguns minutos`);
             }
             
@@ -270,7 +273,7 @@ export default function PlansDetails() {
 
             <AlertNotification success={success} error={error ? error : (errorData ? errorData : "")}/>
 
-            <RegisterLayout title={`Detalhes do Plano ${data.name ? `: ${data.name}` : ""}`} description="Compre o plano e pague por pix">
+            <RegisterLayout title={`${isUserPlan ? "Renovar meu plano" : "Plano"}  ${data.name ? `: ${data.name}` : ""}`} description={isUserPlan ? "Renove o seu plano ": "Compre o plano e pague por pix"}>
                 <div className="space-y-6">
 
                         {qrCode && planQrCode?.id && planQrCode?.id === data.id  ? (
@@ -317,6 +320,13 @@ export default function PlansDetails() {
                                     <>
                                         { !errorData ? (
                                             <>
+                                                {userPlan ? (
+                                                    <>
+                                                        <div className="grid gap-2">
+                                                            <Label htmlFor="name">Data de término:  {formatDateDDMMYYYY(userPlan.end_date)}</Label>
+                                                        </div>
+                                                    </>
+                                                ) : null}
                                                 <div className="grid gap-2">
                                                     <Label htmlFor="name">Valor do plano por mês:  {`${formattMoneyBRL(Number(data.value))}`}</Label>
                                                 </div>
@@ -324,6 +334,7 @@ export default function PlansDetails() {
                                                 <div className="grid gap-2">
                                                     <Label htmlFor="name">Quantidade de agendamentos por mês:  {data.quantty_appointments}</Label>
                                                 </div>
+
 
                                                 <div className="grid gap-2">
                                                     <Label htmlFor="name">Tempo em meses</Label>
@@ -348,10 +359,16 @@ export default function PlansDetails() {
                                                     <Label htmlFor="name">Valor total:  {`${formattMoneyBRL(Number(total))}`}</Label>
                                                 </div>
 
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="name">
+                                                        {isUserPlan? "Nova data " : "Data "}
+                                                         de término:  {calculateEndDate(userPlan?.end_date ?? String(new Date()), isNaN(Number(data.months)) ? 0 : Number(data.months) )}</Label>
+                                                </div>
+
                                                 <div className="flex items-center gap-4">
                                                     <Button disabled={loading || loadingData || !!errorData}>
                                                         {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShoppingCart/>}
-                                                        Gerar QR Code para pagamento
+                                                        { userPlan && isUserPlan ? "Renovar plano" : (userPlan ? "Mudar de plano" : "Gerar QR Code para pagamento") }
                                                     </Button>
 
                                                     <Transition

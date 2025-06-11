@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Plan, type BreadcrumbItem } from '@/types';
+import { Plan, UserPlan, type BreadcrumbItem } from '@/types';
 import axios  from "axios";
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
@@ -39,7 +39,7 @@ export default function PlansIndex() {
     const [loading, setLoading] = useState<boolean>(false);
     const { token } = useAuth();
     const [plans, setPlans] = useState<PlansPagination>({} as PlansPagination);
-    const [userPlan, setUserPlan] = useState<Plan | null>(null);
+    const [userPlan, setUserPlan] = useState<UserPlan | null>(null);
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
@@ -116,14 +116,16 @@ export default function PlansIndex() {
                                         </p>
                                     </div>
                                     <div className="mt-6">
-                                        {(!userPlan && plan.value === 0) ||  (userPlan?.id === plan.id) ? (
+                                        {(!userPlan && plan.value === 0) ||  (userPlan?.plan?.id === plan.id) ? (
                                             <div className="mt-6">
-                                                <Button
-                                                    variant="outline"
-                                                    className="w-full cursor-default pointer-events-none text-muted-foreground border-muted"
-                                                >
-                                                    Seu plano atual
-                                                </Button>
+                                                <Link to={`/planos/${plan.id}`}>
+                                                    <Button
+                                                        variant="outline"
+                                                        className="w-full cursor-default pointer-events-none text-muted-foreground border-muted"
+                                                    >
+                                                        Seu plano atual - Renove
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         ) : (
                                             <Link to={`/planos/${plan.id}`}>

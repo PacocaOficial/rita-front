@@ -65,6 +65,16 @@ export interface Plan {
     color: string;
 }
 
+export interface UserPlan {
+    id: number;
+    plan: Plan
+    payment_id: number;
+    user_id: number;
+    plan_id: number | null;
+    start_date: Date;
+    end_date: string;
+}
+
 type AppointmentPagination = {
     current_page: number;
     data: Plan[];
