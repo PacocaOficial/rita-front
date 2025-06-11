@@ -132,6 +132,9 @@ export default function PlansRegister() {
             if (!data.description) {
                 errors.description = ["O campo descrição é obrigatório."];
             }
+            if (data.value !== 0 && data.value && data.value < 5) {
+                errors.value = ["O plano precisa ser no mínimo R$ 5,00."];
+            }
             if (data.value == null) {
                 errors.value = ["O campo value é obrigatório."];
             }
