@@ -132,7 +132,7 @@ export default function PlansRegister() {
             if (!data.description) {
                 errors.description = ["O campo descrição é obrigatório."];
             }
-            if (!data.value) {
+            if (data.value == null) {
                 errors.value = ["O campo value é obrigatório."];
             }
             if (!data.quantty_appointments) {

@@ -106,7 +106,7 @@ export default function PlansIndex() {
                             return (
                                 <li key={plan.id} className="mb=4 flex flex-col justify-between border rounded-lg p-6 shadow-md w-full md:w-[calc(33.333%-1rem)] dark:bg-zinc-900">
                                     <div>
-                                        <div className={`flex items-center gap-2 mb-4 ${plan.color}`}>
+                                        <div className={`flex items-center gap-2 mb-4 ${plan.color}`} style={{color: plan.color}}>
                                             {plan.icon && <LucideIcon name={plan.icon} />}
 
                                             <h3 className="text-xl font-bold">{plan.name}</h3>
