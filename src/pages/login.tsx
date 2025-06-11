@@ -159,7 +159,7 @@ export default function Login({ status }: LoginProps) {
                                 <button
                                     onClick={() => removeUserSession(userSession.id)}
                                     type="button"
-                                    className="ml-3 text-red-500 hover:text-red-600 p-1"
+                                    className="cursor-pointer ml-3 text-red-800 hover:text-red-700 p-1"
                                     aria-label="Remove user session"
                                 >
                                     <Trash />
@@ -248,7 +248,7 @@ export default function Login({ status }: LoginProps) {
 
                         {usersSessions.length >= 1 ? (
                             <div className="text-muted-foreground text-center text-sm">
-                                <TextLink href={"/cadastro"} tabIndex={5}>
+                                <TextLink onClick={() => setForceNewLogin(false)} href={"/cadastro"} tabIndex={5}>
                                     Contas salvas
                                 </TextLink>
                             </div>
