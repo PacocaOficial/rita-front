@@ -249,20 +249,24 @@ export default function PlansDetails() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
                 <Helmet>
-                    <title>Rita - Plano - {data.name}</title>
-                    <meta name="description" content={`Rita - Plano - ${data.name}!`} />
-                    <meta name="keywords" content={`Rita - agendamentos, notificação, teams, discord Paçoca, rede social brasileira, login, entrar, conta, entrar na conta}`} />
-                    <meta name="author" content="Rita - Paçoca Inc." />
-                    <meta property="og:title" content={`Rita - Plano - ${data.name}`} />
-                    <meta property="og:description" content={`Rita - Plano - ${data.name}`} />
-                    <meta property="og:image" content="/img/logo.png" />
-                    <meta property="og:url" content={window.location.href} />
-                    <meta property="og:type" content="website" />
-                    <meta name="twitter:card" content="summary_large_image" />
-                    <meta name="twitter:title" content={`Rita - Plano - ${data.name}`} />
-                    <meta name="twitter:description" content={`Rita - Plano - ${data.name}`} />
-                    <meta name="twitter:image" content="/img/logo.png" />
-                    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
+                    {data?.name && (
+                        <>
+                            <title>{`Rita - Plano: ${data.name}`}</title>
+                            <meta name="description" content={`Rita - Plano: ${data?.name}!`} />
+                            <meta name="keywords" content={`Rita - agendamentos, notificação, teams, discord Paçoca, rede social brasileira, login, entrar, conta, entrar na conta}`} />
+                            <meta name="author" content="Rita - Paçoca Inc." />
+                            <meta property="og:title" content={`Rita - Plano: ${data?.name}`} />
+                            <meta property="og:description" content={`Rita - Plano: ${data?.name}`} />
+                            <meta property="og:image" content="/img/logo.png" />
+                            <meta property="og:url" content={window.location.href} />
+                            <meta property="og:type" content="website" />
+                            <meta name="twitter:card" content="summary_large_image" />
+                            <meta name="twitter:title" content={`Rita - Plano: ${data?.name}`} />
+                            <meta name="twitter:description" content={`Rita - Plano: ${data?.name}`} />
+                            <meta name="twitter:image" content="/img/logo.png" />
+                            <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
+                        </>
+                    )}
                 </Helmet>
 
             <AlertNotification success={success} error={error ? error : (errorData ? errorData : "")}/>
