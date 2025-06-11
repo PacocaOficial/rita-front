@@ -17,13 +17,22 @@ export default function Welcome() {
 
   return (
     <>
-      <Helmet title="Home">
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link
-          href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600"
-          rel="stylesheet"
-        />
-      </Helmet>
+    <Helmet>
+      <title>Rita - Paçoca</title>
+      <meta name="description" content={`Rita, seu lembrete de tarefas e agendamentos!`} />
+      <meta name="keywords" content={`Rita, Paçoca, rede social brasileira, login, entrar, conta, entrar na conta}`} />
+      <meta name="author" content="Rita, Paçoca Inc." />
+      <meta property="og:title" content={`Rita, seu lembrete de tarefas e agendamentos`} />
+      <meta property="og:description" content={`Rita, seu lembrete de tarefas e agendamentos`} />
+      <meta property="og:image" content="/img/logo.png" />
+      <meta property="og:url" content={window.location.href} />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={`Rita, seu lembrete de tarefas e agendamentos`} />
+      <meta name="twitter:description" content={`Rita, seu lembrete de tarefas e agendamentos`} />
+      <meta name="twitter:image" content="/img/logo.png" />
+      <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
+    </Helmet>
 
       <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] px-4 py-6 text-[#1b1b18] lg:justify-center dark:bg-[#0a0a0a]">
         {/* Navbar */}

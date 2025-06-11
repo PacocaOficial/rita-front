@@ -116,7 +116,7 @@ export const emojis: Record<string, string> = {
 
     ':pacoca:': "<img src='/img/pacoca-sem-braco.png' class='emoji' alt=':pacoca:' data-title=':pacoca:' style='height: 25px; width: 25px'>",
     ':pacoca_corpo:': "<img src='/img/pacoca-com-braco.png' class='emoji' alt=':pacoca_corpo:' data-title=':pacoca_corpo:' style='height: 25px; width: 32px'>",
-    ':pacoca_fundo:': "<img src='/img/pacoca-sem-braco-rounded.png' class='emoji' alt=':pacoca_fundo:' data-title=':pacoca_fundo:' style='height: 25px; width: 25px'>",
+    ':pacoca_fundo:': "<img src='/img/logo.png' class='emoji' alt=':pacoca_fundo:' data-title=':pacoca_fundo:' style='height: 25px; width: 25px'>",
     ':pacoca_fundo_braco:': "<img src='/img/pacoca-com-braco-rounded.png' class='emoji' alt=':pacoca_fundo_braco:' data-title=':pacoca_fundo_braco:' style='height: 25px; width: 25px'>",
     ':pacoca_cat:': "<img src='/img/nyan-cat.gif' class='emoji' alt=':pacoca_cat:' data-title=':pacoca_cat:' style='margin-right: -14px; height: 20px; width: 40px';>",
     ':pacoca_404:': "<img src='/img/errors/page-not-found.jpg' class='emoji' alt=':pacoca_404:' data-title=':pacoca_404:' style='height: 30px; width: 30px'>",

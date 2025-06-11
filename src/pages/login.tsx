@@ -123,8 +123,20 @@ export default function Login({ status }: LoginProps) {
             <>
             {error && <ErrorAlert show={!!error} message={error} onClose={() => setError("")} />}
             <AuthLayout title="Acesse sua conta" description="Entre com sua conta do Paçoca">
-                <Helmet title="Rita - Login">
-                
+                <Helmet>
+                    <title>Rita - Login</title>
+                    <meta name="description" content={`Rita - Faça login no Rita!`} />
+                    <meta name="keywords" content={`Rita, rede social brasileira, login, entrar, conta, entrar na conta}`} />
+                    <meta name="author" content="Rita Inc." />
+                    <meta property="og:title" content={`Rita - Faça login no Rita`} />
+                    <meta property="og:description" content={`Rita - Faça login no Rita`} />
+                    <meta property="og:image" content="/img/logo.png" />
+                    <meta property="og:url" content={window.location.href} />
+                    <meta property="og:type" content="website" />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:title" content={`Rita - Faça login no Rita`} />
+                    <meta name="twitter:description" content={`Rita - Faça login no paçoca`} />
+                    <meta name="twitter:image" content="/img/logo.png" />
                 </Helmet>
 
                 {usersSessions.length >= 1 && !forceNewLogin ? (
@@ -203,7 +215,7 @@ export default function Login({ status }: LoginProps) {
                                 <div className="flex items-center">
                                     <Label htmlFor="password">Senha</Label>
                                     <TextLink href={"a"} className="ml-auto text-sm" tabIndex={5}>
-                                        Esqueci minha senha
+                                        Esqueci minha senha do paçoca
                                     </TextLink>
                                 </div>
                                 <Input

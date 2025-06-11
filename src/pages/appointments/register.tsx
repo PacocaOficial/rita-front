@@ -17,6 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
 import { LoadingThreeCircle } from '@/components/ui/loading';
 import { LoaderCircle } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -170,6 +171,23 @@ export default function AppointmentsRegister() {
     
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
+            <Helmet>
+                <title>Rita - Novo agendamento</title>
+                <meta name="description" content={`Rita, cadastre um novo agendamento!`} />
+                <meta name="keywords" content={`Rita, agendamentos, notificação, teams, discord Paçoca, rede social brasileira, login, entrar, conta, entrar na conta}`} />
+                <meta name="author" content="Rita, Paçoca Inc." />
+                <meta property="og:title" content={`Rita, cadastre um novo agendamento`} />
+                <meta property="og:description" content={`Rita, cadastre um novo agendamento`} />
+                <meta property="og:image" content="/img/logo.png" />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={`Rita, cadastre um novo agendamento`} />
+                <meta name="twitter:description" content={`Rita, cadastre um novo agendamento`} />
+                <meta name="twitter:image" content="/img/logo.png" />
+                <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
+            </Helmet>
+
             <AlertNotification success={success} error={error ? error : (errorData ? errorData : "")}/>
 
             <RegisterLayout title={isEditing ? "Editar" : "Agendar"} description={isEditing ? "Edite seu agendamento" : "Cadastre um novo agendamento"}>

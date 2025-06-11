@@ -13,6 +13,7 @@ import { errorMessage } from '@/utils/text';
 import { AlertNotification } from '@/components/ui/alert-notification';
 import { LoadingThreeCircle } from '@/components/ui/loading';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -82,6 +83,22 @@ export default function PlansIndex() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <AlertNotification success={""} error={error}/>
+                <Helmet>
+                    <title>Rita - Planos</title>
+                    <meta name="description" content={`Rita - Planos!`} />
+                    <meta name="keywords" content={`Rita - agendamentos, notificação, teams, discord Paçoca, rede social brasileira, login, entrar, conta, entrar na conta}`} />
+                    <meta name="author" content="Rita - Paçoca Inc." />
+                    <meta property="og:title" content={`Rita - Planos`} />
+                    <meta property="og:description" content={`Rita - Planos`} />
+                    <meta property="og:image" content="/img/logo.png" />
+                    <meta property="og:url" content={window.location.href} />
+                    <meta property="og:type" content="website" />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:title" content={`Rita - Planos`} />
+                    <meta name="twitter:description" content={`Rita - Planos`} />
+                    <meta name="twitter:image" content="/img/logo.png" />
+                    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
+                </Helmet>
 
             <IndexLayout title='Planos' description='Escolha o plano que melhor se adapta às suas necessidades'>
                 {loading ? (
