@@ -17,6 +17,9 @@ import { errorMessage } from '@/utils/text';
 import { useAuth } from '@/contexts/auth-context';
 import { LoaderCircle } from 'lucide-react';
 import { LoadingThreeCircle } from '@/components/ui/loading';
+import { Select, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SelectItem } from '@/components/ui/select';
+import { LucideIcon } from '@/components/ui/lucide-icon';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -277,15 +280,28 @@ export default function PlansRegister() {
                         <div className="grid gap-2">
                             <Label htmlFor="icon">Icone (lucide icon)</Label>
 
-                            <Input
+                            <Select
                                 disabled={loadingData || !!errorData}
-                                id="icon"
-                                type="text"
-                                className={"mt-1 block w-full" + (errorsInput.icon ? " border-red-500 focus:ring-red-500" : "")}
                                 value={data.icon}
-                                onChange={(e) => setData('icon', e.target.value)}
-                                placeholder="Heart"
-                            />
+                                onValueChange={(value) => setData('icon', value)}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecione..." />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                    <SelectItem value="Gift">
+                                        <LucideIcon name="Gift" /> Gift
+                                    </SelectItem>
+                                    <SelectItem value="Rocket">
+                                        <LucideIcon name="Rocket" /> Rocket
+                                    </SelectItem>
+                                    <SelectItem value="BadgeDollarSign">
+                                        <LucideIcon name="BadgeDollarSign" /> BadgeDollarSign
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+
 
                             {errorsInput.icon && (
                                 <InputError message={errorsInput.icon[0]} />

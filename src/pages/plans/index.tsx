@@ -4,7 +4,6 @@ import axios  from "axios";
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import IndexLayout from '@/layouts/appointments/index';
-import { BadgeDollarSign, Gift, Rocket } from 'lucide-react';
 import { formattMoneyBRL } from "@/utils/utils"
 import { useEffect, useState } from 'react';
 import { RITA_API_URL } from '@/utils/vars';
@@ -14,6 +13,7 @@ import { AlertNotification } from '@/components/ui/alert-notification';
 import { LoadingThreeCircle } from '@/components/ui/loading';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { LucideIcon } from '@/components/ui/lucide-icon';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,14 +21,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/plans',
     },
 ];
-
-const iconMap = {
-  Gift,
-  Rocket,
-  BadgeDollarSign,
-} as const;
-
-type IconName = keyof typeof iconMap;
 
 type PlansPagination = {
     current_page: number;
@@ -111,13 +103,12 @@ export default function PlansIndex() {
                 ) : (
                     <ul className="flex flex-wrap gap-4 items-stretch mt-4 ">
                         {plans?.data?.map((plan) => {
-                            const IconComponent = iconMap[plan.icon as IconName];
-
                             return (
                                 <li key={plan.id} className="mb=4 flex flex-col justify-between border rounded-lg p-6 shadow-md w-full md:w-[calc(33.333%-1rem)] bg-zinc-900">
                                     <div>
                                         <div className={`flex items-center gap-2 mb-4 ${plan.color}`}>
-                                            {IconComponent && <IconComponent className="w-5 h-5" />}
+                                            {plan.icon && <LucideIcon name={plan.icon} />}
+
                                             <h3 className="text-xl font-bold">{plan.name}</h3>
                                         </div>
                                         <p className="text-sm text-neutral-300">
