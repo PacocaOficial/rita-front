@@ -146,16 +146,15 @@ export default function PlansDetails() {
 
     const submit: FormEventHandler = async (e) => {
         e.preventDefault();
-        
+        setErrorsInput({});
         setError("")
         setLoading(true)
-        e.preventDefault();
 
         try {
             let errors: Record<string, string[]> = {};
             
             if (!data.months) {
-                errors.name = ["O campo quantidade de meses é obrigatório."];
+                errors.months = ["O campo quantidade de meses é obrigatório."];
             }
             
 
@@ -332,10 +331,9 @@ export default function PlansDetails() {
                                                     <Input
                                                         id="months"
                                                         type='number'
-                                                        className="mt-1 block w-full"
+                                                        className={"mt-1 block w-full" + (errorsInput.months ? " border-red-500 focus:ring-red-500" : "")}
                                                         value={data.months}
                                                         onChange={(e) => setData('months', e.target.value)}
-                                                        required
                                                         min={1}
                                                         autoComplete="months"
                                                         placeholder="Tempo em meses"
