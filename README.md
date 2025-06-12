@@ -64,8 +64,8 @@ Antes de iniciar, certifique-se de que você tem as seguintes ferramentas instal
 
     ```
 
-6. Configure o WhatsAP
-    (Ainda em desenvolvimento)
+7. Configure o WhatsAP
+    (Ainda em desenvolvimento) leia a documentação em: https://github.com/PacocaOficial/notification
 
 ```
 ## Licença
