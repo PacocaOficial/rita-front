@@ -36,7 +36,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
 
     return (
         <div className="px-4 py-6">
-            <Heading title="Configurações" description={`Atualize suas informações de perfil no <a class="text-[#5bb4ff]" target="_BLANK" href="${PACOCA_URL}"> Central de contas</a> Alterações são refletidas no Paçoca, RITA e ReadBooks!`} />
+            <Heading title="Configurações" description={`Atualize suas informações de perfil no <a class="text-[#5bb4ff]" target="_BLANK" href="${PACOCA_URL}"> Central de contas</a> Paçoca, Read Books, Cronos e Rita!`} />
 
             <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
                 <aside className="w-full max-w-xl lg:w-48">
