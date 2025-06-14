@@ -11,6 +11,8 @@ import PlansIndex from "@/pages/plans";
 import PlansManage from "@/pages/plans/manage";
 import PlansRegister from "@/pages/plans/register";
 import PlansDetails from "@/pages/plans/details";
+import Appearance from "@/pages/settings/appearance";
+import Profile from "@/pages/settings/profile";
  
 const AppRoutes: React.FC = () => {
 	return (
@@ -31,6 +33,11 @@ const AppRoutes: React.FC = () => {
                                 <Route path="planos/gerenciar" element={<RoutesAuthenticated><PlansManage /></RoutesAuthenticated>} />
                                 <Route path="planos/novo" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
                                 <Route path="planos/:id" element={<RoutesAuthenticated><PlansDetails /></RoutesAuthenticated>} />
+                                
+                                <Route path="perfil/tema" element={<RoutesAuthenticated><Appearance /></RoutesAuthenticated>} />
+                                <Route path="perfil" element={<RoutesAuthenticated><Profile /></RoutesAuthenticated>} />
+                                {/* <Route path="perfil/novo" element={<RoutesAuthenticated><PlansRegister /></RoutesAuthenticated>} />
+                                <Route path="perfil/:id" element={<RoutesAuthenticated><PlansDetails /></RoutesAuthenticated>} /> */}
 
 
                                 {/* não pode estar logado */}

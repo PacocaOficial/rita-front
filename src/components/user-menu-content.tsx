@@ -31,7 +31,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                    <Link className="cursor-pointer block w-full" to={"/perfil/editar"}>
+                    <Link className="cursor-pointer block w-full" to={"/perfil/tema"}>
                         <Settings className="mr-2" />
                         Configurações
                     </Link>
