@@ -6,14 +6,15 @@ import { Button } from '@/components/ui/button';
 // import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 // import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useInitials } from '@/hooks/use-initials';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { UserMenuContent } from '@/components/user-menu-content';
 
 export default function Welcome() {
   const { token, user: auth } = useAuth();
-      const getInitials = useInitials();
+  const getInitials = useInitials();
+  const navigate = useNavigate();
 
   return (
     <>

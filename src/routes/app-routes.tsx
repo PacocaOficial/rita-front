@@ -18,7 +18,7 @@ const AppRoutes: React.FC = () => {
 	return (
                 <Routes>
                         <Route path="/" element={<Main />}>
-                                <Route path="/" element={<Welcome/>} />
+                                <Route path="/" element={<RoutesUnauthenticated> <Welcome/></RoutesUnauthenticated>} />
                                 <Route path="*" element={<NotFound />} />
 
                                 {/* rotas autenticadas */}
